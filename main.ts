@@ -231,7 +231,7 @@ scene.setTileMap(img`
 . . . . . . . . . . 
 . . . . . . . . . . 
 `)
-let mySprite2 = sprites.create(img`
+let mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . 
