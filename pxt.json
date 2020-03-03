@@ -1,0 +1,21 @@
+{
+    "name": "Final Project",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "color-coded-tilemap": "*",
+        "animation": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
