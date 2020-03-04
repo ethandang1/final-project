@@ -1,4 +1,25 @@
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+namespace myTiles {
+    //% blockIdentity=images._tile
+    export const tile0 = img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`
+}
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 3; index++) {
         Wizard.setImage(list[Count])
         pause(100)
@@ -50,6 +71,14 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `)
+})
+scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
+    game.over(false)
+})
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Wizard.vy == 0) {
+        Wizard.vy = -200
+    }
 })
 let list: Image[] = []
 let Wizard: Sprite = null
@@ -222,36 +251,129 @@ list = [img`
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `]
 scene.setTileMap(img`
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c b b b c f 
+f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b c f 
+f c b c c b b b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b c f 
+f c b b c b b b b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b b c c c b b b b b b b c c c b b b b b c c c b b b b c f 
+f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b 4 4 4 b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 3 b c f 
+f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
-let mySprite = sprites.create(img`
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . 5 . . . . . . . . . . 
-. . . . . . . . . . 5 5 . . . . . . . . . . 
-. . . . . . . . . . 5 5 . . . . . . . . . . 
-. . . . . . . . . . 5 . 5 . . . . . . . . . 
-. . . . . 5 5 5 5 5 . . 5 5 5 5 5 5 . . . . 
-. . . . . . 5 5 5 5 5 5 5 5 5 5 5 5 . . . . 
-. . . . . . . . 5 5 . . . 5 5 5 . . . . . . 
-. . . . . . . . 5 5 5 5 5 . 5 . . . . . . . 
-. . . . . . . 5 . 5 5 5 5 . 5 5 . . . . . . 
-. . . . . . . 5 5 5 . . . 5 . 5 . . . . . . 
-. . . . . . 5 5 5 . . . . . 5 5 5 . . . . . 
-. . . . . 5 5 . . . . . . . . 5 5 . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . 
-`, SpriteKind.Player)
+controller.moveSprite(Wizard, 100, 0)
+scene.setTile(4, img`
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+`, true)
+scene.setTile(15, img`
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f 
+`, true)
+scene.setTile(12, img`
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+`, true)
+scene.setTile(6, img`
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+`, true)
+scene.setTile(9, img`
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+6 6 b b b b b b b b b b b b b b b b b b b b b b b b b b b 6 6 6 
+6 6 6 b b b b b b b b b b b b b b b b b b b b b b b b 6 6 6 6 6 
+6 6 6 6 b b b b b b b b b 6 6 6 6 b b b b b b b b b b 6 6 6 6 6 
+6 6 6 6 6 b b b b b b 6 6 6 6 6 6 6 b b b b b b b b 6 6 6 6 6 6 
+6 6 6 6 6 6 b b b b 6 6 6 6 6 6 6 6 6 b b b b b b 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 b b b b 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+`, false)
+scene.cameraFollowSprite(Wizard)
+Wizard.setPosition(64, 195)
+Wizard.ay = 400
