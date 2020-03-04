@@ -19,15 +19,13 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
-function Level () {
-    if (next_level == list2.length) {
-        game.over(true)
+function Level_Splash () {
+    if (next_level == 1) {
+        game.splash("level 2")
     }
-    scene.setTileMap(list2[next_level])
-    for (let value of scene.getTilesByType(7)) {
-        scene.place(value, Wizard)
+    if (next_level == 2) {
+        game.splash("level 3")
     }
-    next_level += 1
 }
 function wizard () {
     Count = 0
@@ -202,9 +200,6 @@ function wizard () {
     Wizard.ay = 400
     scene.cameraFollowSprite(Wizard)
 }
-function Spell () {
-	
-}
 scene.onHitTile(SpriteKind.Player, 3, function (sprite) {
     Level()
 })
@@ -261,7 +256,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `)
 })
+function Spell () {
+	
+}
 function background () {
+    game.showLongText("Welcome, you are playing the Wizarding Adventure of Education!", DialogLayout.Bottom)
+    game.showLongText("Use the left and right arrow keys to move sideways.", DialogLayout.Bottom)
+    game.showLongText("Press the up arrow key to jump. Press the dow arrow key to cast a spell!", DialogLayout.Bottom)
+    game.showLongText("Beat all 4 levels to win. Be careful of the enemy spirits and pools of poison!", DialogLayout.Bottom)
     list2 = [img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
@@ -291,7 +293,7 @@ f c 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
 f c 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 c f 
 f c 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 c f 
 f c 8 8 8 8 8 8 8 8 8 8 8 8 4 4 4 8 8 8 8 4 4 4 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 c f 
-f c 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 3 8 c f 
+f c 8 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 3 8 c f 
 f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
 f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `, img`
@@ -307,7 +309,7 @@ f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 
 f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
 f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
 f c d d d d d d d d d d d d 4 4 4 d d d d 4 4 4 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
-f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 3 d c f 
+f c d 7 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 3 d c f 
 f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
 f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `]
@@ -457,15 +459,26 @@ f f f f f f f f f f f f f f f f
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
 })
+function Level () {
+    if (next_level == list2.length) {
+        game.over(true)
+    }
+    scene.setTileMap(list2[next_level])
+    for (let value of scene.getTilesByType(7)) {
+        scene.place(value, Wizard)
+    }
+    next_level += 1
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Wizard.vy == 0) {
         Wizard.vy = -200
     }
 })
-let list: Image[] = []
-let Count = 0
-let Wizard: Sprite = null
 let list2: Image[] = []
+let list: Image[] = []
+let Wizard: Sprite = null
+let Count = 0
 let next_level = 0
 background()
 wizard()
+Level_Splash()
