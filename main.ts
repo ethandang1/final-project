@@ -19,14 +19,6 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
-function Level_Splash () {
-    if (next_level == 1) {
-        game.splash("level 2")
-    }
-    if (next_level == 2) {
-        game.splash("level 3")
-    }
-}
 function wizard () {
     Count = 0
     Wizard = sprites.create(img`
@@ -459,6 +451,14 @@ f f f f f f f f f f f f f f f f
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
 })
+function Level_Splash () {
+    if (next_level == 1) {
+        game.splash("level 2")
+    }
+    if (next_level == 2) {
+        game.splash("level 3")
+    }
+}
 function Level () {
     if (next_level == list2.length) {
         game.over(true)
@@ -474,11 +474,11 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         Wizard.vy = -200
     }
 })
+let next_level = 0
 let list2: Image[] = []
 let list: Image[] = []
 let Wizard: Sprite = null
 let Count = 0
-let next_level = 0
 background()
 wizard()
 Level_Splash()
