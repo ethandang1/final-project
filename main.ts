@@ -19,6 +19,29 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+function enemy () {
+    for (let value of scene.getTilesByType(14)) {
+        Mob = sprites.create(img`
+. . . . f f f f . . . . 
+. . f f 1 1 1 1 f f . . 
+. f b 1 1 1 1 1 1 b f . 
+. f 1 1 1 1 1 1 1 d f . 
+f d 1 1 1 1 1 1 1 d d f 
+f d 1 1 1 1 1 1 d d d f 
+f d 1 1 1 d d d d d d f 
+f d 1 d f b d d d d b f 
+f b d d f c d b b b c f 
+. f 1 1 1 1 1 b b c f . 
+. f 1 b 1 f f f f f . . 
+. f b f c 1 1 1 b f . . 
+. . f f 1 b 1 b f f . . 
+. . . f b f b f f f . f 
+. . . . f f f f f f f f 
+`, SpriteKind.Enemy)
+        Mob.vx = 100
+        scene.place(value, Mob)
+    }
+}
 function wizard () {
     Count = 0
     Wizard = sprites.create(img`
@@ -247,10 +270,62 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `)
+    Spell = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 2 . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 2 . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . 4 . . . . . . 4 . . . . 2 . 4 . . 2 . . . . . . . . . . 
+. . . . . . . . . . . 2 . . . . 2 2 2 . . . . 2 4 2 . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . 2 4 4 4 2 . . 2 4 2 . . . . . 2 . . . . . . 2 . . 
+. . 2 2 2 2 2 . . . . . . . 2 4 4 4 4 4 2 2 4 4 4 2 2 2 . . . . . . . . . . . . 
+. . . 4 4 4 4 4 . . . . . 2 4 4 4 4 5 4 4 4 4 4 4 4 4 4 2 . . 2 2 . . . . . . . 
+. . . . . . . . . . . . 2 4 4 4 4 5 5 5 4 4 4 4 4 4 4 4 4 2 2 4 2 . . . . . . . 
+. . . . . . . . . . . 2 4 4 4 5 5 5 5 5 5 5 5 5 4 4 4 4 4 4 4 4 2 . . 2 . . . . 
+. . . 2 2 2 . . . . 2 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 4 4 4 2 2 . . . . . . . . 
+. . . . 4 4 4 . . . 2 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 4 2 . . . 4 . . . . . . 
+. . . . . . . . . . 2 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 4 4 4 2 . . . . . . . . . 
+. . . . . . . . . . . 2 4 4 4 4 4 5 5 5 5 5 5 5 5 4 4 4 4 4 4 2 . . . . . . . . 
+. 2 2 2 2 2 2 2 . . . . 2 4 4 4 4 5 5 5 4 4 4 5 5 5 4 4 4 2 4 4 2 . . 4 . . . . 
+. . 4 4 4 4 4 4 4 . . . . 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 2 . 2 2 . . . . . . . . 
+. . . . . . . . . . . . . . 2 4 4 4 4 4 2 2 4 4 4 2 2 4 4 2 . . . . . . . . . . 
+. . . . . . . . . . . . 4 . . 2 4 4 4 2 . . 2 4 2 . . 2 4 4 2 . . . . . . . . . 
+. . . . . . . . . 4 . . . . . . 2 2 2 . 4 . . 2 4 2 . . 2 4 2 . . 2 . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 2 . . . . 2 2 . . . . . . . . . 
+. . . . . . . . . . . . . . . . 4 . . . . . . . 2 . . . 2 . 4 . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . 2 . . . . . . . . . . . . . 2 . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+`, Wizard, 300, 0)
+    animation.runImageAnimation(
+    Spell,
+    [img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`],
+    500,
+    false
+    )
 })
-function Spell () {
-	
-}
 function background () {
     game.showLongText("Welcome, you are playing the Wizarding Adventure of Education!", DialogLayout.Bottom)
     game.showLongText("Use the left and right arrow keys to move sideways.", DialogLayout.Bottom)
@@ -319,28 +394,46 @@ f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
 f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b b b b b b b 4 4 4 b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 3 b b c f 
-f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b 1 b b b e b b b 1 b b b b b b b b b b b b b b b b b 1 b b b b e b b b b 1 b b b b b 3 b b c f 
+f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c 1 c c c c c c c 1 c 9 9 9 9 c c 9 9 9 9 c c c c c c 1 c c c c c c c c c 1 c c c c c c c c c f 
 f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
     scene.setTile(6, img`
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, true)
+    scene.setTile(1, img`
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+`, false)
     scene.setTile(12, img`
 c c c c c c c c c c c c c c c c 
 c c c c c c c c c c c c c c c c 
@@ -359,6 +452,24 @@ c c c c c c c c c c c c c c c c
 c c c c c c c c c c c c c c c c 
 c c c c c c c c c c c c c c c c 
 `, true)
+    scene.setTile(14, img`
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b 
+`, false)
     scene.setTile(9, img`
 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
@@ -367,31 +478,31 @@ b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
-6 6 b b b b b b b b b b b b b b b b b b b b b b b b b b b 6 6 6 
-6 6 6 b b b b b b b b b b b b b b b b b b b b b b b b 6 6 6 6 6 
-6 6 6 6 b b b b b b b b b 6 6 6 6 b b b b b b b b b b 6 6 6 6 6 
-6 6 6 6 6 b b b b b b 6 6 6 6 6 6 6 b b b b b b b b 6 6 6 6 6 6 
-6 6 6 6 6 6 b b b b 6 6 6 6 6 6 6 6 6 b b b b b b 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 b b b b 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+7 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b 7 7 7 
+7 7 7 b b b b b b b b b b b b b b b b b b b b b b b b 7 7 7 7 7 
+7 7 7 7 b b b b b b b b b 7 7 7 7 b b b b b b b b b b 7 7 7 7 7 
+7 7 7 7 7 b b b b b b 7 7 7 7 7 7 7 b b b b b b b b 7 7 7 7 7 7 
+7 7 7 7 7 7 b b b b 7 7 7 7 7 7 7 7 7 b b b b b b 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 b b b b 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, false)
     scene.setTile(4, img`
 b b b b b b b b b b b b b b b b 
@@ -447,17 +558,16 @@ f f f f f f f f f f f f f f f f
 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
 `, true)
+    enemy()
 }
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Mob.destroy(effects.spray, 500)
+})
 function Level_Splash () {
-    if (next_level == 1) {
-        game.splash("level 2")
-    }
-    if (next_level == 2) {
-        game.splash("level 3")
-    }
+	
 }
 function Level () {
     if (next_level == list2.length) {
@@ -468,7 +578,53 @@ function Level () {
         scene.place(value, Wizard)
     }
     next_level += 1
+    if (next_level == 1) {
+        game.splash("level 2")
+    }
+    if (next_level == 2) {
+        game.splash("level 3")
+    }
 }
+scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
+    if (sprite.isHittingTile(CollisionDirection.Left)) {
+        sprite.setImage(img`
+. . . . f f f f . . . . 
+. . f f 1 1 1 1 f f . . 
+. f b 1 1 1 1 1 1 b f . 
+. f d 1 1 1 1 1 1 1 f . 
+f d d 1 1 1 1 1 1 1 d f 
+f d d d 1 1 1 1 1 1 d f 
+f d d d d d d 1 1 1 d f 
+f b d d d d b f d 1 d f 
+f c b b b d c f d d b f 
+. f c b b 1 1 1 1 1 f . 
+. . f f f f f 1 b 1 f . 
+. . f b 1 1 1 c f b f . 
+. . f f b 1 b 1 f f . . 
+f . f f f b f b f . . . 
+f f f f f f f f . . . . 
+`)
+    } else if (sprite.isHittingTile(CollisionDirection.Right)) {
+        sprite.setImage(img`
+. . . . f f f f . . . . 
+. . f f 1 1 1 1 f f . . 
+. f b 1 1 1 1 1 1 b f . 
+. f 1 1 1 1 1 1 1 d f . 
+f d 1 1 1 1 1 1 1 d d f 
+f d 1 1 1 1 1 1 d d d f 
+f d 1 1 1 d d d d d d f 
+f d 1 d f b d d d d b f 
+f b d d f c d b b b c f 
+. f 1 1 1 1 1 b b c f . 
+. f 1 b 1 f f f f f . . 
+. f b f c 1 1 1 b f . . 
+. . f f 1 b 1 b f f . . 
+. . . f b f b f f f . f 
+. . . . f f f f f f f f 
+`)
+    }
+    sprite.setVelocity(sprite.vx * -1, 0)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Wizard.vy == 0) {
         Wizard.vy = -200
@@ -476,9 +632,10 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 let next_level = 0
 let list2: Image[] = []
+let Spell: Sprite = null
 let list: Image[] = []
 let Wizard: Sprite = null
 let Count = 0
-background()
+let Mob: Sprite = null
 wizard()
-Level_Splash()
+background()
