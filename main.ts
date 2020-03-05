@@ -19,29 +19,6 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
-function enemy () {
-    for (let value of scene.getTilesByType(14)) {
-        Mob = sprites.create(img`
-. . . . f f f f . . . . 
-. . f f 1 1 1 1 f f . . 
-. f b 1 1 1 1 1 1 b f . 
-. f 1 1 1 1 1 1 1 d f . 
-f d 1 1 1 1 1 1 1 d d f 
-f d 1 1 1 1 1 1 d d d f 
-f d 1 1 1 d d d d d d f 
-f d 1 d f b d d d d b f 
-f b d d f c d b b b c f 
-. f 1 1 1 1 1 b b c f . 
-. f 1 b 1 f f f f f . . 
-. f b f c 1 1 1 b f . . 
-. . f f 1 b 1 b f f . . 
-. . . f b f b f f f . f 
-. . . . f f f f f f f f 
-`, SpriteKind.Enemy)
-        Mob.vx = 100
-        scene.place(value, Mob)
-    }
-}
 function wizard () {
     Count = 0
     Wizard = sprites.create(img`
@@ -569,6 +546,29 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 function Level_Splash () {
 	
 }
+function enemy () {
+    for (let value of scene.getTilesByType(14)) {
+        Mob = sprites.create(img`
+. . . . f f f f . . . . 
+. . f f 1 1 1 1 f f . . 
+. f b 1 1 1 1 1 1 b f . 
+. f 1 1 1 1 1 1 1 d f . 
+f d 1 1 1 1 1 1 1 d d f 
+f d 1 1 1 1 1 1 d d d f 
+f d 1 1 1 d d d d d d f 
+f d 1 d f b d d d d b f 
+f b d d f c d b b b c f 
+. f 1 1 1 1 1 b b c f . 
+. f 1 b 1 f f f f f . . 
+. f b f c 1 1 1 b f . . 
+. . f f 1 b 1 b f f . . 
+. . . f b f b f f f . f 
+. . . . f f f f f f f f 
+`, SpriteKind.Enemy)
+        Mob.vx = 100
+        scene.place(value, Mob)
+    }
+}
 function Level () {
     if (next_level == list2.length) {
         game.over(true)
@@ -630,12 +630,12 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         Wizard.vy = -200
     }
 })
+let Mob: Sprite = null
 let next_level = 0
 let list2: Image[] = []
 let Spell: Sprite = null
 let list: Image[] = []
 let Wizard: Sprite = null
 let Count = 0
-let Mob: Sprite = null
 wizard()
 background()
