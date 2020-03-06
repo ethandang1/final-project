@@ -19,6 +19,9 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+// Wizard can be moved with sideways arrows, camera
+// follows it,  and it has an animation when casting a
+// spell
 function wizard () {
     Count = 0
     Wizard = sprites.create(img`
@@ -192,9 +195,12 @@ function wizard () {
     Wizard.ay = 400
     scene.cameraFollowSprite(Wizard)
 }
+// Teleport to next level when touching the pink block
 scene.onHitTile(SpriteKind.Player, 3, function (sprite) {
     Level()
 })
+// Fireball projectile comes out of wizard when down
+// arrow is pressed
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     for (let index = 0; index < 3; index++) {
         Wizard.setImage(list[Count])
@@ -279,35 +285,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `, Wizard, 300, 0)
-    animation.runImageAnimation(
-    Spell,
-    [img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`],
-    500,
-    false
-    )
 })
 function background () {
+    // Splashes direction at start of game
     game.showLongText("Welcome, you are playing the Wizarding Adventure of Education!", DialogLayout.Bottom)
     game.showLongText("Use the left and right arrow keys to move sideways.", DialogLayout.Bottom)
     game.showLongText("Press the up arrow key to jump. Press the dow arrow key to cast a spell!", DialogLayout.Bottom)
     game.showLongText("Beat all 4 levels to win. Be careful of the enemy spirits and pools of poison!", DialogLayout.Bottom)
+    // Different levels
     list2 = [img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
@@ -371,10 +356,11 @@ f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
 f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b b b b b b b 4 4 4 b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b 1 b b b e b b b 1 b b b b b b b b b b b b b b b b b 1 b b b b e b b b b 1 b b b b b 3 b b c f 
+f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b b b b 3 b b c f 
 f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c 1 c c c c c c c 1 c 9 9 9 9 c c 9 9 9 9 c c c c c c 1 c c c c c c c c c 1 c c c c c c c c c f 
 f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
+    // Creates walls of these colored blocks
     scene.setTile(6, img`
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
@@ -394,23 +380,23 @@ f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, true)
     scene.setTile(1, img`
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-`, false)
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+`, true)
     scene.setTile(12, img`
 c c c c c c c c c c c c c c c c 
 c c c c c c c c c c c c c c c c 
@@ -537,9 +523,13 @@ f f f f f f f f f f f f f f f f
 `, true)
     enemy()
 }
+// Wizard dies when hitting the liquid
+//
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
 })
+// Ghost dies when hit with spell projectile from
+// wizard
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     Mob.destroy(effects.spray, 500)
 })
@@ -547,6 +537,8 @@ function Level_Splash () {
 	
 }
 function enemy () {
+    // Ghosts spawn on all brown blocks
+    //
     for (let value of scene.getTilesByType(14)) {
         Mob = sprites.create(img`
 . . . . f f f f . . . . 
@@ -563,12 +555,15 @@ f b d d f c d b b b c f
 . f b f c 1 1 1 b f . . 
 . . f f 1 b 1 b f f . . 
 . . . f b f b f f f . f 
-. . . . f f f f f f f f 
+b b b f f f f f f f f f 
 `, SpriteKind.Enemy)
         Mob.vx = 100
         scene.place(value, Mob)
     }
 }
+// Wizard spawns on green blocks on each level and
+// splashes what level you are on. You win when you
+// hit the last level
 function Level () {
     if (next_level == list2.length) {
         game.over(true)
@@ -585,6 +580,7 @@ function Level () {
         game.splash("level 3")
     }
 }
+// Ghost switches direction when hitting a wall
 scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
     if (sprite.isHittingTile(CollisionDirection.Left)) {
         sprite.setImage(img`
@@ -602,7 +598,7 @@ f c b b b d c f d d b f
 . . f b 1 1 1 c f b f . 
 . . f f b 1 b 1 f f . . 
 f . f f f b f b f . . . 
-f f f f f f f f . . . . 
+f f f f f f f f b b b b 
 `)
     } else if (sprite.isHittingTile(CollisionDirection.Right)) {
         sprite.setImage(img`
@@ -620,11 +616,12 @@ f b d d f c d b b b c f
 . f b f c 1 1 1 b f . . 
 . . f f 1 b 1 b f f . . 
 . . . f b f b f f f . f 
-. . . . f f f f f f f f 
+b b b b f f f f f f f f 
 `)
     }
     sprite.setVelocity(sprite.vx * -1, 0)
 })
+// Wizard jumps when pressing up arrow
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Wizard.vy == 0) {
         Wizard.vy = -200
