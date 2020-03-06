@@ -292,6 +292,7 @@ function background () {
     game.showLongText("Use the left and right arrow keys to move sideways.", DialogLayout.Bottom)
     game.showLongText("Press the up arrow key to jump. Press the dow arrow key to cast a spell!", DialogLayout.Bottom)
     game.showLongText("Beat all 4 levels to win. Be careful of the enemy spirits and pools of poison!", DialogLayout.Bottom)
+    info.setLife(3)
     // Different levels
     list2 = [img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -380,22 +381,22 @@ f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, true)
     scene.setTile(1, img`
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
 `, true)
     scene.setTile(12, img`
 c c c c c c c c c c c c c c c c 
@@ -467,6 +468,24 @@ b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, false)
+    scene.setTile(7, img`
+b 2 2 2 2 2 2 2 b b b b b b b b 
+b b b b 2 2 4 2 2 2 b b 2 2 b b 
+b b b 2 2 4 4 5 5 4 2 2 b 2 2 b 
+b b 2 2 3 3 3 4 4 4 4 4 4 b 2 b 
+b 2 2 3 3 3 3 2 2 2 1 1 4 4 2 b 
+2 2 3 3 3 3 3 2 2 2 1 1 5 4 2 b 
+2 4 3 3 3 3 2 2 2 2 2 5 5 4 2 b 
+2 2 3 3 3 2 2 2 4 4 4 4 5 4 2 b 
+2 4 4 3 3 2 2 4 4 4 4 4 4 4 2 b 
+2 4 2 3 3 2 2 4 4 4 4 4 4 4 2 b 
+2 b 4 2 3 3 2 4 4 4 4 4 2 2 2 b 
+2 b 4 2 2 3 2 2 4 4 4 2 4 4 b b 
+2 b b 4 2 2 2 2 2 2 2 2 4 b b b 
+2 b b b 2 2 2 2 2 2 4 4 b b b b 
+b b b b b 2 2 2 2 2 2 2 2 2 b b 
+b b b b b b b b b b b b b b b b 
+`, false)
     scene.setTile(4, img`
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
@@ -504,25 +523,69 @@ f f f f f f f f f f f f f f f f
 f f f f f f f f f f f f f f f f 
 `, true)
     scene.setTile(3, img`
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
-3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+. . . . . . . . . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . c a a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . c c c a a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . c c c . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . a c c c . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . a a a c c c c a a a a a a . . . . c . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . a a a a a c c c a a a a a a . . . c . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . a a a a a a a c c c a a a a a . . . . c a . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . a a a a a a a a a a c c c a a a a a . . . . a a . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . a a c c c a a a a a a a a a c c a a a a . . . . c a . . c a . . . . . . . . . . . . . . . . . . . 
+. . . . . a a c a b a a a a a c c c c c c c c a a a a b . . c a a . c a . . . . . . . . . . . . . . . . . . . 
+. . . . . a c . a b a a a a c c c c c c c c c a a a a . b . . c a . c a . . . . . . . . . . . . . . . . . . . 
+. . . a a c a a b a a a c c c c c c c c c c c c a a a . a a a c a . c a . . . . . . . . . . . . . . . . . . . 
+. . a a c . a b b a a c c c c c c c c c c c c c a a a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
+. . a c c . a b a a c c c c c c c c c b b b b c c a a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
+. . a c . a . b a a c c c c c c c c b b b b b c a c a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
+. a . c . a b b a c c c c c c c c b b b b b b b a c a a a a a a . . c c a . . . . . . . . . . . . . . . . . . 
+a a c c . a b a a c c c c c c c b b b b b b b b a a a a a a a a . . c c a . . . . . . . . . . . . . . . . . . 
+. . c . . . b a c c a c c c c c b b b b b b b b a a a a a a c a . . c c a . . . . . . . . . . . . . . . . . . 
+. . . . . . b a c a c c c c c b b b b b b b b b a a a a a a c a . . c . a . . . . . . . . . . . . . . . . . . 
+. . . . . a b a c a c c c c c b b b b b b b b b a a a a a c a . . c c . a . . . . . . . . . . . . . . . . . . 
+. . . . . a b c a a c c c c b b b b b b b b b b a a a a a c a . . c c . a . . . . . . . . . . . . . . . . . . 
+. . . . . b a c a a c c c c b b b b b b b b b b a a a a a a a . . c c . a . . . . . . . . . . . . . . . . . . 
+. . . . . a c a a c c c c b b b b b b b b b b b a a a a a a . . . c . . a . . . . . . . . . . . . . . . . . . 
+. . . . a a c a a c c c c b b b b b b b b b b b a a a a a . . . c c . a . . . . . . . . . . . . . . . . . . . 
+. . . . a c c a a a c c c b b b b b b b b b b b a a a a a . . a c c . a . . . . . . . . . . . . . . . . . . . 
+. . . a a c a a a a c c b b b b b b b b b b b b a a a a a b . a c c . a . . . . . . . . . . . . . . . . . . . 
+. . . a c c a a a a c c b b b b b b b b b b b b a a a a a a a a c . . a . . . . . . . . . . . . . . . . . . . 
+. . . a c c a a a a c c b b b b b b b b b b b b a a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . 
+. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a a c . . a . . . . . . . . . . . . . . . . . . . . 
+. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . . 
+. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . . 
+. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c . a a . . . . . . . . . . . . . . . . . . . . . 
+. . a c c a a a a a c c b b b b b b b b b b b b a a a a a a c . a . . . . . . . . . . . . . . . . . . . . . . 
+. . a c a a a a a a c c b b b b b b b b b b b b a a a a c . c a a . . . . . . . . . . . . . . . . . . . . . . 
+. . a c a . a a a a c c b b b b b b b b b b b b a a a c c c . a . . . . . . . . . . . . . . . . . . . . . . . 
+. . a c a . . a a a c c c b b b b b b b b b b b a a a c c c a . . . . . . . . . . . . . . . . . . . . . . . . 
+. . a c a . a a a a c c c b b b b b b b b b b b a a c a c a a . . . . . . . . . . . . . . . . . . . . . . . . 
+. . c a . . a a a a c c c b b b b b b b b b b b a c c c c a . . . . . c . . . . . . . . . . . . . . . . . . . 
+. . c a . a a a a a c c c b b b b b b b b b b b a c c a a . . . . . . c . . . . . . . . . . . . . . . . . . . 
+. . a a . a c a a a c c c c b b b b b b b b b b a c a a . . . . . . c a . . . . . . . . . . . . . . . . . . . 
+. . a . a a c a a a a c c c c b b b b b b b b b a a a a . . b . . . c a . . . . . . . . . . . . . . . . . . . 
+. . c . a c a a b a a c c c c c b b b b b b b b a a a a . b . . . . c a . . . . . . . . . . . . . . . . . . . 
+. . c . a c a a b a a a c c c c b b b b b b b b a a a . b b . . . c a a . . . . . . . . . . . . . . . . . . . 
+. . c . a c a . b b a a c c c c c b b b b b b c a a a b a a a . c . a . . . . . . . . . . . . . . . . . . . . 
+. . c . a c a . . b b a a c c c c c c b b b b c a a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . 
+. . c . a c a . . b b c a a c c c c c c c c c c a c c c c c c c . a a . . . . . . . . . . . . . . . . . . . . 
+. . c . a c a . . . b a c c a a c c c c c c c a a a a a a a a a a a . . . . . . . . . . . . . . . . . . . . . 
+. . . . a c a . . . . a a c c a a a a a a a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . a c . . . . . . . a c c c a a a a a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . a . c . . . . . . . a a c c c c a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . a a c . . . . . . . . a a a c a c c c c . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . c c . . . . . . . . . a a a a a a a a a a a . . . . . . c c . . . . . . . . . . . . . . . . . . . 
+. . . . . . . c . . . . . . . . . . . . a a a c c c c c c c c c c a a a c . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . a a a a a a a a a a a . . . . . . . . . . . . . . . . . . . . . . 
 `, true)
     enemy()
 }
+// Ghost dies when hit with spell projectile from
+// wizard
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+})
 // Wizard dies when hitting the liquid
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
@@ -530,32 +593,33 @@ scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
 // Ghost dies when hit with spell projectile from
 // wizard
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Mob.destroy(effects.spray, 500)
+    otherSprite.destroy(effects.spray, 500)
+    scene.cameraShake(4, 200)
+    info.changeScoreBy(1)
 })
-function Level_Splash () {
-	
-}
 function enemy () {
     // Ghosts spawn on all brown blocks
     for (let value of scene.getTilesByType(14)) {
         Mob = sprites.create(img`
-. . . . f f f f . . . . 
-. . f f 1 1 1 1 f f . . 
-. f b 1 1 1 1 1 1 b f . 
-. f 1 1 1 1 1 1 1 d f . 
-f d 1 1 1 1 1 1 1 d d f 
-f d 1 1 1 1 1 1 d d d f 
-f d 1 1 1 d d d d d d f 
-f d 1 d f b d d d d b f 
-f b d d f c d b b b c f 
-. f 1 1 1 1 1 b b c f . 
-. f 1 b 1 f f f f f . . 
-. f b f c 1 1 1 b f . . 
-. . f f 1 b 1 b f f . . 
-. . . f b f b f f f . f 
-b b b f f f f f f f f f 
+. . . . . . . . . . . . . . . . 
+. . . . . f f f f . . . . . . . 
+. . . f f 1 1 1 1 f f . . . . . 
+. . f b 1 1 1 1 1 1 b f . . . . 
+. . f 1 1 1 1 1 1 1 d f . . . . 
+. f d 1 1 1 1 1 1 1 d d f . . . 
+. f d 1 1 1 1 1 1 d d d f . . . 
+. f d 1 1 1 d d d d d d f . . . 
+. f d 1 d f b d d d d b f . . . 
+. f b d d f c d b b b c f . . . 
+. . f 1 1 1 1 1 b b c f . . . . 
+. . f 1 b 1 f f f f f . . . . . 
+. . f b f c 1 1 1 b f . . . . . 
+. . . f f 1 b 1 b f f . . . . . 
+. . . . f b f b f f f . f . . . 
+. . . . . f f f f f f f f . . . 
 `, SpriteKind.Enemy)
         Mob.vx = 100
+        Mob.ay = 300
         scene.place(value, Mob)
     }
 }
@@ -580,41 +644,43 @@ function Level () {
 }
 // Ghost switches direction when hitting a wall
 scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
-    if (sprite.isHittingTile(CollisionDirection.Left)) {
+    if (sprite.isHittingTile(CollisionDirection.Bottom)) {
         sprite.setImage(img`
-. . . . f f f f . . . . 
-. . f f 1 1 1 1 f f . . 
-. f b 1 1 1 1 1 1 b f . 
-. f d 1 1 1 1 1 1 1 f . 
-f d d 1 1 1 1 1 1 1 d f 
-f d d d 1 1 1 1 1 1 d f 
-f d d d d d d 1 1 1 d f 
-f b d d d d b f d 1 d f 
-f c b b b d c f d d b f 
-. f c b b 1 1 1 1 1 f . 
-. . f f f f f 1 b 1 f . 
-. . f b 1 1 1 c f b f . 
-. . f f b 1 b 1 f f . . 
-f . f f f b f b f . . . 
-f f f f f f f f b b b b 
+. . . . . . . . . . . . . . . . 
+. . . . . . . f f f f . . . . . 
+. . . . . f f 1 1 1 1 f f . . . 
+. . . . f b 1 1 1 1 1 1 b f . . 
+. . . . f d 1 1 1 1 1 1 1 f . . 
+. . . f d d 1 1 1 1 1 1 1 d f . 
+. . . f d d d 1 1 1 1 1 1 d f . 
+. . . f d d d d d d 1 1 1 d f . 
+. . . f b d d d d b f d 1 d f . 
+. . . f c b b b d c f d d b f . 
+. . . . f c b b 1 1 1 1 1 f . . 
+. . . . . f f f f f 1 b 1 f . . 
+. . . . . f b 1 1 1 c f b f . . 
+. . . . . f f b 1 b 1 f f . . . 
+. . . f . f f f b f b f . . . . 
+. . . f f f f f f f f . . . . . 
 `)
-    } else if (sprite.isHittingTile(CollisionDirection.Right)) {
+    } else if (sprite.isHittingTile(CollisionDirection.Bottom)) {
         sprite.setImage(img`
-. . . . f f f f . . . . 
-. . f f 1 1 1 1 f f . . 
-. f b 1 1 1 1 1 1 b f . 
-. f 1 1 1 1 1 1 1 d f . 
-f d 1 1 1 1 1 1 1 d d f 
-f d 1 1 1 1 1 1 d d d f 
-f d 1 1 1 d d d d d d f 
-f d 1 d f b d d d d b f 
-f b d d f c d b b b c f 
-. f 1 1 1 1 1 b b c f . 
-. f 1 b 1 f f f f f . . 
-. f b f c 1 1 1 b f . . 
-. . f f 1 b 1 b f f . . 
-. . . f b f b f f f . f 
-b b b b f f f f f f f f 
+. . . . . . . . . . . . . . . . 
+. . . . . f f f f . . . . . . . 
+. . . f f 1 1 1 1 f f . . . . . 
+. . f b 1 1 1 1 1 1 b f . . . . 
+. . f 1 1 1 1 1 1 1 d f . . . . 
+. f d 1 1 1 1 1 1 1 d d f . . . 
+. f d 1 1 1 1 1 1 d d d f . . . 
+. f d 1 1 1 d d d d d d f . . . 
+. f d 1 d f b d d d d b f . . . 
+. f b d d f c d b b b c f . . . 
+. . f 1 1 1 1 1 b b c f . . . . 
+. . f 1 b 1 f f f f f . . . . . 
+. . f b f c 1 1 1 b f . . . . . 
+. . . f f 1 b 1 b f f . . . . . 
+. . . . f b f b f f f . f . . . 
+. . . . . f f f f f f f f . . . 
 `)
     }
     sprite.setVelocity(sprite.vx * -1, 0)
