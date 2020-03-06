@@ -524,7 +524,6 @@ f f f f f f f f f f f f f f f f
     enemy()
 }
 // Wizard dies when hitting the liquid
-//
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
     game.over(false)
 })
@@ -538,7 +537,6 @@ function Level_Splash () {
 }
 function enemy () {
     // Ghosts spawn on all brown blocks
-    //
     for (let value of scene.getTilesByType(14)) {
         Mob = sprites.create(img`
 . . . . f f f f . . . . 
