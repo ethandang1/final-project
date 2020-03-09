@@ -295,21 +295,56 @@ function background () {
     info.setLife(3)
     // Different levels
     list2 = [img`
-f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f c c c c c c 2 2 2 c c c c c c 2 2 2 c c c c c 2 2 2 2 2 2 c c c 2 2 c c c c c 2 2 2 2 2 2 c c c c c c c 2 2 2 2 c c c c c 2 2 c c c c c c 2 2 2 c f 
-f c 2 c c c 2 2 2 2 2 c c c c 2 2 2 2 2 c c c 2 2 2 2 2 2 2 2 c c 2 2 c c c c c 2 2 2 2 2 2 2 c c c c c c 2 2 2 2 2 c c c 2 2 2 2 c c c c 2 2 2 2 c f 
-f c 2 c c 2 2 2 2 2 2 c c c 2 2 2 2 2 2 c c c 2 2 2 2 2 2 2 2 c c 2 2 c c c c 2 2 2 2 2 2 2 2 c c c c c 2 2 2 2 2 2 c c c 2 2 2 2 2 c c c 2 2 2 2 c f 
-f c 2 2 c 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 c c 2 2 2 2 2 2 2 2 2 c 2 2 2 c c c 2 2 2 2 2 2 2 2 2 c c c 2 2 2 2 2 2 2 c c c 2 2 2 2 2 c c c 2 2 2 2 c f 
-f c 2 2 c 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 2 2 2 2 c c 2 2 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 c 2 2 2 2 2 c f 
-f c 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 c 2 2 2 2 2 c f 
-f c 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c f 
-f c 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c f 
-f c 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c f 
-f c 2 2 2 2 2 2 2 2 2 2 2 2 4 4 4 2 2 2 2 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 c f 
-f c 2 7 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 c f 
-f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 3 b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 4 4 4 4 4 c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b 4 b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b e b b b b b b b b b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 4 b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b 4 4 4 4 b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 4 4 b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b e b b b b b 4 4 b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b 4 4 4 b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b e b b b b b b b b b b b b b b b b b b 1 f 
+f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c b b b b b b b 4 4 4 4 4 b b 4 b b b b b b b b b b b b b c f 
+f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b c c b b b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 4 b b c f 
+f c b b c b b b b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b b c c c b b b b b b b c c c b b b b b c c c b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b c f 
+f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 b b b b b b b b b b b 4 b b b b b b b b b b b c f 
+f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b e b b b b b b e b b b b b b b c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c b b c c c c b b b b b b e b b b b b b c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c b b c c c c 1 c c c c c c c c c c c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c f 
+f c c c c c c c c c c c c c c c 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f c c c c c c c c c c c c c c c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `, img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
@@ -469,21 +504,21 @@ b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `, false)
     scene.setTile(7, img`
-b 2 2 2 2 2 2 2 b b b b b b b b 
-b b b b 2 2 4 2 2 2 b b 2 2 b b 
-b b b 2 2 4 4 5 5 4 2 2 b 2 2 b 
-b b 2 2 3 3 3 4 4 4 4 4 4 b 2 b 
-b 2 2 3 3 3 3 2 2 2 1 1 4 4 2 b 
-2 2 3 3 3 3 3 2 2 2 1 1 5 4 2 b 
-2 4 3 3 3 3 2 2 2 2 2 5 5 4 2 b 
-2 2 3 3 3 2 2 2 4 4 4 4 5 4 2 b 
-2 4 4 3 3 2 2 4 4 4 4 4 4 4 2 b 
-2 4 2 3 3 2 2 4 4 4 4 4 4 4 2 b 
-2 b 4 2 3 3 2 4 4 4 4 4 2 2 2 b 
-2 b 4 2 2 3 2 2 4 4 4 2 4 4 b b 
-2 b b 4 2 2 2 2 2 2 2 2 4 b b b 
-2 b b b 2 2 2 2 2 2 4 4 b b b b 
-b b b b b 2 2 2 2 2 2 2 2 2 b b 
+b b b b b b b b b b b b b b b b 
+b b b b b b 9 9 9 9 b b b b b b 
+b b b b 9 9 9 5 5 9 9 9 b b b b 
+b b b 6 6 6 6 9 9 9 9 9 9 b b b 
+b b 9 6 6 6 6 8 8 8 1 1 9 9 b b 
+b b 6 6 6 6 6 8 8 8 1 1 5 9 b b 
+b 9 6 6 6 6 8 8 8 8 8 5 5 9 9 b 
+b 9 6 6 6 8 8 8 9 9 9 9 5 9 9 b 
+b 9 9 6 6 8 8 9 9 9 9 9 9 9 9 b 
+b 9 8 6 6 8 8 9 9 9 9 9 9 9 9 b 
+b b 9 8 6 6 8 9 9 9 9 9 8 9 b b 
+b b 9 8 8 6 8 8 9 9 9 8 9 9 b b 
+b b b 9 8 8 8 8 8 8 8 8 9 b b b 
+b b b b 9 9 8 8 8 8 9 9 b b b b 
+b b b b b b 9 9 9 9 b b b b b b 
 b b b b b b b b b b b b b b b b 
 `, false)
     scene.setTile(4, img`
@@ -523,61 +558,40 @@ f f f f f f f f f f f f f f f f
 f f f f f f f f f f f f f f f f 
 `, true)
     scene.setTile(3, img`
-. . . . . . . . . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . c a a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . c c c a a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . c c c . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . a c c c . a a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . a a a c c c c a a a a a a . . . . c . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . a a a a a c c c a a a a a a . . . c . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . a a a a a a a c c c a a a a a . . . . c a . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . a a a a a a a a a a c c c a a a a a . . . . a a . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . a a c c c a a a a a a a a a c c a a a a . . . . c a . . c a . . . . . . . . . . . . . . . . . . . 
-. . . . . a a c a b a a a a a c c c c c c c c a a a a b . . c a a . c a . . . . . . . . . . . . . . . . . . . 
-. . . . . a c . a b a a a a c c c c c c c c c a a a a . b . . c a . c a . . . . . . . . . . . . . . . . . . . 
-. . . a a c a a b a a a c c c c c c c c c c c c a a a . a a a c a . c a . . . . . . . . . . . . . . . . . . . 
-. . a a c . a b b a a c c c c c c c c c c c c c a a a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
-. . a c c . a b a a c c c c c c c c c b b b b c c a a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
-. . a c . a . b a a c c c c c c c c b b b b b c a c a a a a a c a . c c a . . . . . . . . . . . . . . . . . . 
-. a . c . a b b a c c c c c c c c b b b b b b b a c a a a a a a . . c c a . . . . . . . . . . . . . . . . . . 
-a a c c . a b a a c c c c c c c b b b b b b b b a a a a a a a a . . c c a . . . . . . . . . . . . . . . . . . 
-. . c . . . b a c c a c c c c c b b b b b b b b a a a a a a c a . . c c a . . . . . . . . . . . . . . . . . . 
-. . . . . . b a c a c c c c c b b b b b b b b b a a a a a a c a . . c . a . . . . . . . . . . . . . . . . . . 
-. . . . . a b a c a c c c c c b b b b b b b b b a a a a a c a . . c c . a . . . . . . . . . . . . . . . . . . 
-. . . . . a b c a a c c c c b b b b b b b b b b a a a a a c a . . c c . a . . . . . . . . . . . . . . . . . . 
-. . . . . b a c a a c c c c b b b b b b b b b b a a a a a a a . . c c . a . . . . . . . . . . . . . . . . . . 
-. . . . . a c a a c c c c b b b b b b b b b b b a a a a a a . . . c . . a . . . . . . . . . . . . . . . . . . 
-. . . . a a c a a c c c c b b b b b b b b b b b a a a a a . . . c c . a . . . . . . . . . . . . . . . . . . . 
-. . . . a c c a a a c c c b b b b b b b b b b b a a a a a . . a c c . a . . . . . . . . . . . . . . . . . . . 
-. . . a a c a a a a c c b b b b b b b b b b b b a a a a a b . a c c . a . . . . . . . . . . . . . . . . . . . 
-. . . a c c a a a a c c b b b b b b b b b b b b a a a a a a a a c . . a . . . . . . . . . . . . . . . . . . . 
-. . . a c c a a a a c c b b b b b b b b b b b b a a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . 
-. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a a c . . a . . . . . . . . . . . . . . . . . . . . 
-. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . . 
-. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . . 
-. . . a c a a a a a c c b b b b b b b b b b b b a a a a a a c . a a . . . . . . . . . . . . . . . . . . . . . 
-. . a c c a a a a a c c b b b b b b b b b b b b a a a a a a c . a . . . . . . . . . . . . . . . . . . . . . . 
-. . a c a a a a a a c c b b b b b b b b b b b b a a a a c . c a a . . . . . . . . . . . . . . . . . . . . . . 
-. . a c a . a a a a c c b b b b b b b b b b b b a a a c c c . a . . . . . . . . . . . . . . . . . . . . . . . 
-. . a c a . . a a a c c c b b b b b b b b b b b a a a c c c a . . . . . . . . . . . . . . . . . . . . . . . . 
-. . a c a . a a a a c c c b b b b b b b b b b b a a c a c a a . . . . . . . . . . . . . . . . . . . . . . . . 
-. . c a . . a a a a c c c b b b b b b b b b b b a c c c c a . . . . . c . . . . . . . . . . . . . . . . . . . 
-. . c a . a a a a a c c c b b b b b b b b b b b a c c a a . . . . . . c . . . . . . . . . . . . . . . . . . . 
-. . a a . a c a a a c c c c b b b b b b b b b b a c a a . . . . . . c a . . . . . . . . . . . . . . . . . . . 
-. . a . a a c a a a a c c c c b b b b b b b b b a a a a . . b . . . c a . . . . . . . . . . . . . . . . . . . 
-. . c . a c a a b a a c c c c c b b b b b b b b a a a a . b . . . . c a . . . . . . . . . . . . . . . . . . . 
-. . c . a c a a b a a a c c c c b b b b b b b b a a a . b b . . . c a a . . . . . . . . . . . . . . . . . . . 
-. . c . a c a . b b a a c c c c c b b b b b b c a a a b a a a . c . a . . . . . . . . . . . . . . . . . . . . 
-. . c . a c a . . b b a a c c c c c c b b b b c a a a a a a a c c . a . . . . . . . . . . . . . . . . . . . . 
-. . c . a c a . . b b c a a c c c c c c c c c c a c c c c c c c . a a . . . . . . . . . . . . . . . . . . . . 
-. . c . a c a . . . b a c c a a c c c c c c c a a a a a a a a a a a . . . . . . . . . . . . . . . . . . . . . 
-. . . . a c a . . . . a a c c a a a a a a a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . a c . . . . . . . a c c c a a a a a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . a . c . . . . . . . a a c c c c a a a a b . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . a a c . . . . . . . . a a a c a c c c c . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . c c . . . . . . . . . a a a a a a a a a a a . . . . . . c c . . . . . . . . . . . . . . . . . . . 
-. . . . . . . c . . . . . . . . . . . . a a a c c c c c c c c c c a a a c . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . a a a a a a a a a a a . . . . . . . . . . . . . . . . . . . . . . 
+b b b b b b b b b b b b b b b b 
+b b b b b b c c c c b b b b b b 
+b b b b c c c f f c c c b b b b 
+b b b c b b b c c c c c c b b b 
+b b c b b b b a a a 1 1 c c b b 
+b b c b b b b a a a 1 1 f c b b 
+b c b b b b a a a a a f f c c b 
+b c b b b a a a c c c c f c c b 
+b c c b b a a c c c c c c c c b 
+b c a b b a a c c c c c c c c b 
+b b c a b b a c c c c c a c b b 
+b b c a a b a a c c c a c c b b 
+b b b c a a a a a a a a c b b b 
+b b b b c c a a a a c c b b b b 
+b b b b b b c c c c b b b b b b 
+b b b b b b b b b b b b b b b b 
+`, true)
+    scene.setTile(1, img`
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
 `, true)
     enemy()
 }
@@ -643,48 +657,10 @@ function Level () {
     if (next_level == 2) {
         game.splash("level 3: Leader")
     }
+    enemy()
 }
 // Ghost switches direction when hitting a wall
 scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
-    if (sprite.vx < 0) {
-        sprite.setImage(img`
-. . . . . . . . . . . . . . . . 
-. . . . . f f f f . . . . . . . 
-. . . f f 1 1 1 1 f f . . . . . 
-. . f b 1 1 1 1 1 1 b f . . . . 
-. . f 1 1 1 1 1 1 1 d f . . . . 
-. f d 1 1 1 1 1 1 1 d d f . . . 
-. f d 1 1 1 1 1 1 d d d f . . . 
-. f d 1 1 1 d d d d d d f . . . 
-. f d 1 d f b d d d d b f . . . 
-. f b d d f c d b b b c f . . . 
-. . f 1 1 1 1 1 b b c f . . . . 
-. . f 1 b 1 f f f f f . . . . . 
-. . f b f c 1 1 1 b f . . . . . 
-. . . f f 1 b 1 b f f . . . . . 
-. . . . f b f b f f f . f . . . 
-b b b b b f f f f f f f f . . . 
-`)
-    } else if (sprite.vx > 0) {
-        sprite.setImage(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . f f f f . . . . . 
-. . . . . f f 1 1 1 1 f f . . . 
-. . . . f b 1 1 1 1 1 1 b f . . 
-. . . . f d 1 1 1 1 1 1 1 f . . 
-. . . f d d 1 1 1 1 1 1 1 d f . 
-. . . f d d d 1 1 1 1 1 1 d f . 
-. . . f d d d d d d 1 1 1 d f . 
-. . . f b d d d d b f d 1 d f . 
-. . . f c b b b d c f d d b f . 
-. . . . f c b b 1 1 1 1 1 f . . 
-. . . . . f f f f f 1 b 1 f . . 
-. . . . . f b 1 1 1 c f b f . . 
-. . . . . f f b 1 b 1 f f . . . 
-. . . f . f f f b f b f . . . . 
-. . . f f f f f f f f b b b b b 
-`)
-    }
     sprite.vx = sprite.vx * -1
 })
 // Wizard jumps when pressing up arrow
