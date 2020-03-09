@@ -585,6 +585,8 @@ a a c c . a b a a c c c c c c c b b b b b b b b a a a a a a a a . . c c a . . . 
 // wizard
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
+    scene.cameraShake(4, 200)
+    sprite.destroy(effects.coolRadial, 500)
 })
 // Wizard dies when hitting the liquid
 scene.onHitTile(SpriteKind.Player, 6, function (sprite) {
@@ -616,7 +618,7 @@ function enemy () {
 . . f b f c 1 1 1 b f . . . . . 
 . . . f f 1 b 1 b f f . . . . . 
 . . . . f b f b f f f . f . . . 
-. . . . . f f f f f f f f . . . 
+b b b b b f f f f f f f f . . . 
 `, SpriteKind.Enemy)
         Mob.vx = 100
         Mob.ay = 300
@@ -636,34 +638,15 @@ function Level () {
     }
     next_level += 1
     if (next_level == 1) {
-        game.splash("level 2")
+        game.splash("level 2: Business")
     }
     if (next_level == 2) {
-        game.splash("level 3")
+        game.splash("level 3: Leader")
     }
 }
 // Ghost switches direction when hitting a wall
 scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
-    if (sprite.isHittingTile(CollisionDirection.Bottom)) {
-        sprite.setImage(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . f f f f . . . . . 
-. . . . . f f 1 1 1 1 f f . . . 
-. . . . f b 1 1 1 1 1 1 b f . . 
-. . . . f d 1 1 1 1 1 1 1 f . . 
-. . . f d d 1 1 1 1 1 1 1 d f . 
-. . . f d d d 1 1 1 1 1 1 d f . 
-. . . f d d d d d d 1 1 1 d f . 
-. . . f b d d d d b f d 1 d f . 
-. . . f c b b b d c f d d b f . 
-. . . . f c b b 1 1 1 1 1 f . . 
-. . . . . f f f f f 1 b 1 f . . 
-. . . . . f b 1 1 1 c f b f . . 
-. . . . . f f b 1 b 1 f f . . . 
-. . . f . f f f b f b f . . . . 
-. . . f f f f f f f f . . . . . 
-`)
-    } else if (sprite.isHittingTile(CollisionDirection.Bottom)) {
+    if (sprite.vx < 0) {
         sprite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . f f f f . . . . . . . 
@@ -680,10 +663,29 @@ scene.onHitTile(SpriteKind.Enemy, 1, function (sprite) {
 . . f b f c 1 1 1 b f . . . . . 
 . . . f f 1 b 1 b f f . . . . . 
 . . . . f b f b f f f . f . . . 
-. . . . . f f f f f f f f . . . 
+b b b b b f f f f f f f f . . . 
+`)
+    } else if (sprite.vx > 0) {
+        sprite.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . f f f f . . . . . 
+. . . . . f f 1 1 1 1 f f . . . 
+. . . . f b 1 1 1 1 1 1 b f . . 
+. . . . f d 1 1 1 1 1 1 1 f . . 
+. . . f d d 1 1 1 1 1 1 1 d f . 
+. . . f d d d 1 1 1 1 1 1 d f . 
+. . . f d d d d d d 1 1 1 d f . 
+. . . f b d d d d b f d 1 d f . 
+. . . f c b b b d c f d d b f . 
+. . . . f c b b 1 1 1 1 1 f . . 
+. . . . . f f f f f 1 b 1 f . . 
+. . . . . f b 1 1 1 c f b f . . 
+. . . . . f f b 1 b 1 f f . . . 
+. . . f . f f f b f b f . . . . 
+. . . f f f f f f f f b b b b b 
 `)
     }
-    sprite.setVelocity(sprite.vx * -1, 0)
+    sprite.vx = sprite.vx * -1
 })
 // Wizard jumps when pressing up arrow
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -698,5 +700,5 @@ let Spell: Sprite = null
 let list: Image[] = []
 let Wizard: Sprite = null
 let Count = 0
-wizard()
 background()
+wizard()
