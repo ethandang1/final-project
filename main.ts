@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const AnotherEnemy = SpriteKind.create()
+    export const Info = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -21,6 +22,31 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `
+}
+scene.onHitTile(SpriteKind.Player, 13, function (sprite) {
+    game.splash("Wrong Door!")
+    info.setLife(0)
+})
+function Prompter () {
+    // Ghosts spawn on all brown blocks
+    for (let value of scene.getTilesByType(5)) {
+        Info = sprites.create(img`
+c c c c c c c c c c c c c c 
+c 1 1 1 1 1 1 1 1 1 1 1 1 c 
+c d d d d d d d d d d d d c 
+c d c c c c c c c c c c d c 
+c d b d b b b b b b b b d c 
+c d b b b b b b b b b b d c 
+c d b b b b b b b b b b d c 
+c d b b b b b b b b b b d c 
+c 1 b b b b b b b b b b 1 c 
+c 1 1 d 1 1 d 1 1 d 1 1 1 c 
+c 1 d d d d d d d d d d 1 c 
+c 1 d 1 1 d 1 1 d 1 1 d 1 c 
+c b b b b b b b b b b b b c 
+`, SpriteKind.Info)
+        scene.place(value, Info)
+    }
 }
 // Wizard can be moved with sideways arrows, camera
 // follows it,  and it has an animation when casting a
@@ -322,6 +348,13 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 `, Wizard, 300, 0)
 })
+// Ghost dies when hit with spell projectile from
+// wizard
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.AnotherEnemy, function (sprite, otherSprite) {
+    otherSprite.destroy(effects.spray, 500)
+    scene.cameraShake(4, 200)
+    info.changeScoreBy(1)
+})
 function background () {
     // Splashes direction at start of game
     game.showLongText("Welcome, you are playing the Wizarding Adventure of Education!", DialogLayout.Bottom)
@@ -338,17 +371,17 @@ f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b c f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b c f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 3 b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 4 4 4 4 4 c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 b b b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b 3 b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b 4 4 4 c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b b c f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 1 b b b b b 2 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b 4 4 4 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b 4 4 b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 4 b b b b b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c b b b b b b b b b b b b b b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b 2 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b 4 4 4 b b b b b b 4 4 4 4 4 b b b b 4 4 b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b 4 4 b b b b b b b b b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b 4 4 b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 4 b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c b b b b b b b b b b b b 2 b b b b b b b b b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b b b b b b b b b b b 1 f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b 4 4 4 b b b b b b 4 4 4 4 4 b b b b 4 4 b c f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b b c f 
@@ -357,48 +390,48 @@ f c b b c 4 4 4 b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b 
 f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b c f 
 f c b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b 8 b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b 8 b c f 
 f c b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 b b b b b b b b b b b 4 b b b b b b b b b b b c f 
-f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b e b b b b b b e b b b b b b b c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c b b c c c c b b b b b b e b b b b b b c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c b b c c c c 1 c c c c c c c c c c c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c f 
-f c c c c c c c c c c c c c c c 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
-f c c c c c c c c c c c c c c c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 b b b b b b b b b b b 4 4 b b b b b b b b b b c f 
+f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 5 b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b e b b b b b b e b b b b b b b c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c b b c b b c b b c b b b b b b e b b b b b b c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c 9 9 c 9 9 c 9 9 c 1 c c c c c c c c c c c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c f 
+f c c c c c c c c c c c c 6 6 c 6 6 c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f c c c c c c c c c c c c 6 6 c 6 6 c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
+f c c c c c c c c c c c c 6 6 c 6 6 c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `, img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b c c b b b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b c b b b b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b b c c c b b b b b b b c c c b b b b b c c c b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c b b c c c c c b c c c b c c c c c c c c c c c b c c c c c f 
+f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b c c c c c c c b b b b b c c c b b b b c c c c b b b b c c c c b b c c b b c c c c c c c c b b b c c c b c f 
+f c b c c b b b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b c c c c b b c c b b c c c c c c c c b b b c c c b c f 
+f c b b c b b b b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b c c c c b b b b b b b c c c b b b b b c c c b b b b c c c c b b b c b b b b c c c c c c b b b c c c b c f 
+f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b c b b b c c b b b b b b b b b b c c c b b b b b b b b c b b b b b b b c b b b b b c c c c b b b b b b b b b c c c c b b b b c c c b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c c b b b b b b b b c b b b b b b b c b b b b b c c c b b b b b b b b b b c c c c b b b b c c c b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c c c b b b b b b b b b b c c c b b b b b b c c b c f 
+f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c c c b b b b b b b b b b c c c b b b b b b c b b c f 
+f c 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c b b b b b b b b b b b c b b b b b b b c b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b b c f 
+f c b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c f 
 f c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c b b b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c b b b b b b b b b b 4 4 4 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c b b b b b b b b b b b b b b b b b b 4 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c b b b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b d b b c f 
+f c c c b b b b b b b b b b 4 4 4 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b c f 
+f c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b c f 
+f c c c c b b b b b b b b b b b b b b b b b b 4 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b c f 
 f c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b c f 
 f c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b e b b b b b b e b b b b b b e b b b b b b e b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b 1 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 1 b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b 1 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 1 b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b 1 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 1 b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b e b b b b b b e b b b b b b e b b b b b b e 5 b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b 1 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 1 b b b b b b 2 b b b b b b b 2 b b b b b b 2 b b b b b 1 f 
+f c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b 1 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 1 b b b b b b b b b b 2 b b b b b b b 2 b b b b b b 2 b 1 f 
+f c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b c f 
 f c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b c f 
+f c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 8 b b b b b b b b b b c f 
+f c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b 3 b b c f 
+f c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b c f 
 f c c c c c c c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c f 
 f c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
 f c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
@@ -409,59 +442,37 @@ f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `, img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f c c c c c c d d d c c c c c c d d d c c c c c d d d d d d c c c d d c c c c c d d d d d d c c c c c c c d d d d c c c c c d d c c c c c c d d d c f 
-f c d c c c d d d d d c c c c d d d d d c c c d d d d d d d d c c d d c c c c c d d d d d d d c c c c c c d d d d d c c c d d d d c c c c d d d d c f 
-f c d c c d d d d d d c c c d d d d d d c c c d d d d d d d d c c d d c c c c d d d d d d d d c c c c c d d d d d d c c c d d d d d c c c d d d d c f 
-f c d d c d d d d d d d c d d d d d d d d c c d d d d d d d d d c d d d c c c d d d d d d d d d c c c d d d d d d d c c c d d d d d c c c d d d d c f 
-f c d d c d d d d d d d c d d d d d d d d d c d d d d d d d d d d d d d c c d d d d d d d d d d d c d d d d d d d d d c d d d d d d d c d d d d d c f 
-f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c d d d d d d d d d d d c d d d d d d d d d c d d d d d d d c d d d d d c f 
-f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c d d d d d d d d d d d d d d d d d d d d d d d c f 
-f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
-f c d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
-f c d d d d d d d d d d d d 4 4 4 d d d d 4 4 4 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d c f 
-f c d 7 d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 3 d c f 
-f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c c c c c c c c c c c 9 9 9 9 c c 9 9 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f 1 b b b b 2 b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b 2 b b 1 f 
+f 1 b b b b b b b b b b b b 2 b b b b b 2 b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b 1 f 
+f 1 2 b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b 2 b b b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b 1 f 
+f 1 b b 2 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b 1 f 
+f 1 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 2 b 1 f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f 1 b b b b b b b b b b b b 2 b b b b b b b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b b b b 2 b b b b b b b b b b b b b 2 b b b b b b 1 f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b 7 b 5 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b e b b e b b b b b b b b b 3 b c f 
+f c c c c c c c c c c c 9 9 9 c 9 9 9 c 9 9 9 c 9 9 9 c c 9 9 9 c c 9 9 9 c c 9 9 9 c c 9 9 9 1 c c c c c c c c c c c c c c c c c c c c 1 c c c c c f 
+f f f f f f f f f f f f 6 6 6 f 6 6 6 f 6 6 6 f 6 6 6 f f 6 6 6 f f 6 6 6 f f 6 6 6 f f 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `]
     next_level = 0
     scene.setTileMap(img`
-f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 3 b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b 4 4 4 4 4 c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 b b b b b b c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 1 b b b b b 2 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b 4 4 4 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b 4 4 b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b 4 4 4 b b b b b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c b b b b b b b b b b b b b b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b b b b b b b b b b b 2 b b b b b b b b b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 b b b 4 4 4 b b b b b b 4 4 4 4 4 b b b b 4 4 b 1 f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b b b c f 
-f c b c c b 8 b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b b b b b b b b b b b b b b b b b b b 4 4 4 b b b b c f 
-f c b b c 4 4 4 b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b b c c c b b b b b b b c c c b b b b b c c c b b b b b b b b b b b b b b b b 4 4 4 b b b b b b b b b b c f 
-f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b 4 4 4 4 b b b b b b b b b b b b b b b b b b b b b c f 
-f c b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 4 b b b b b b b b b b b b b 8 b c f 
-f c b b b 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b c f 
-f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 4 b b b b b b b b b b b 4 b b b b b b b b b b b c f 
-f c b 7 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 4 4 b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b e b b b b b b e b b b b b b b c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c b b c c c c b b b b b b e b b b b b b c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c 1 c c c c c c b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
-f c c c c c c c c c c c c c c c b b c c c c 1 c c c c c c c c c c c 1 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c f 
-f c c c c c c c c c c c c c c c 9 9 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
-f c c c c c c c c c c c c c c c 6 6 c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
-f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 c f 
-f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c f 
+f c c c c c c b b b c c c c c c b b b c c c c c b b b b b b c c c b b c c c c c b b b b b b c c c c c c c b b b b c c c c c b b c c c c c c b b b c f 
+f c b c c c b b b b b c c c c b b b b b c c c b b b b b b b b c c b b c c c c c b b b b b b b c c c c c c b b b b b c c c b b b b c c c c b b b b c f 
+f c b c c b b b b b b c c c b b b b b b c c c b b b b b b b b c c b b c c c c b b b b b b b b c c c c c b b b b b b c c c b b b b b c c c b b b b c f 
+f c b b c b b b b b b b c b b b b b b b b c c b b b b b b b b b c b b b c c c b b b b b b b b b c c c b b b b b b b c c c b b b b b c c c b b b b c f 
+f c b b c b b b b b b b c b b b b b b b b b c b b b b b b b b b b b b b c c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b c b b b b b b b b b c b b b b b b b c b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b b b b b b b b b b b b 4 4 4 b b b b 4 4 4 b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c f 
+f c b 7 b b b b 5 b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b b b b b b b b b b b b b b b b b b b b e b b b b b b b b b b 3 b b c f 
+f c c c c c c c c c c c 9 9 9 9 9 9 9 9 9 9 9 9 9 9 c c 1 c c c c c c c 1 c 9 9 9 9 c c 9 9 9 9 c c c c c c 1 c c c c c c c c c 1 c c c c c c c c c f 
+f f f f f f f f f f f f 6 6 6 6 6 6 6 6 6 6 6 6 6 6 f f f f f f f f f f f f 6 6 6 6 f f 6 6 6 6 f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
     // Creates walls of these colored blocks
     scene.setTile(6, img`
@@ -606,6 +617,40 @@ b b b b b b b b b b b b b b b b
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
 `, false)
+    scene.setTile(5, img`
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b 
+`, false)
     scene.setTile(7, img`
 f f f f f f f f f f f f f f f f 
 f e e e e e e e e e e e e e e f 
@@ -625,18 +670,18 @@ f e e e e e e e e e e e e e e f
 f f f f f f f f f f f f f f f f 
 `, false)
     scene.setTile(4, img`
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
+c c c c c c c c c c c c c c c c 
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
@@ -678,26 +723,27 @@ f e e e e e e e e e e e e e e f
 f e e e e e e e e e e e e e e f 
 f f f f f f f f f f f f f f f f 
 `, true)
-    scene.setTile(1, img`
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
-c c c c c c c c c c c c c c c c 
+    scene.setTile(13, img`
+f f f f f f f f f f f f f f f f 
+f e e e e e e e e e e e e e e f 
+f e e e e e e e e e e e e e e f 
+f e e f e e e e e e e e e e e f 
+f e e e f f f f f f e e e e e f 
+f e e e e e e e e e e e e e e f 
+f e e e e e e e e e e e e e e f 
+f e e f e e e e e e e e 5 5 e f 
+f e e e f f f f f f e e 5 5 e f 
+f e e e e e e e e e e e e e e f 
+f e e e e e e e e e e e e e e f 
+f e e f e e e e e e e e e e e f 
+f e e e f f f f f f e e e e e f 
+f e e e e e e e e e e e e e e f 
+f e e e e e e e e e e e e e e f 
+f f f f f f f f f f f f f f f f 
 `, true)
     Sideways_enemy()
     enemy()
+    Prompter()
     Powerup()
     game.splash("BAA level 1: Future", "The BAA Future level focuses on basic business skills, introduces your members to community service, and emphasizes the importance of FBLA involvement at the local level")
 }
@@ -728,13 +774,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 // Ghost dies when hit with spell projectile from
 // wizard
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.destroy(effects.spray, 500)
-    scene.cameraShake(4, 200)
-    info.changeScoreBy(1)
-})
-// Ghost dies when hit with spell projectile from
-// wizard
-sprites.onOverlap(SpriteKind.AnotherEnemy, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy(effects.spray, 500)
     scene.cameraShake(4, 200)
     info.changeScoreBy(1)
@@ -792,6 +831,7 @@ function Level () {
         game.splash("BAA level 4:", "The BAA America level focuses on FBLA leadership at all levels, helps your members hone advanced business skills, and instills a spirit of community involvemenet in your members")
     }
     enemy()
+    Prompter()
     Sideways_enemy()
     Powerup()
 }
@@ -858,6 +898,17 @@ scene.onHitTile(SpriteKind.AnotherEnemy, 1, function (sprite) {
     }
     sprite.vx = sprite.vx * -1
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Info, function (sprite, otherSprite) {
+    if (next_level == 0) {
+        otherSprite.say("Enemies ahead!", 5000)
+    } else if (next_level == 1) {
+        otherSprite.say("Get to the top!", 5000)
+    } else if (next_level == 2) {
+        otherSprite.say("Pick the right path...", 5000)
+    } else if (next_level == 3) {
+        otherSprite.say("You're almost there!", 5000)
+    }
+})
 // Wizard jumps when pressing up arrow
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Wizard.vy == 0) {
@@ -899,5 +950,6 @@ let Mob2: Sprite = null
 let list: Image[] = []
 let Wizard: Sprite = null
 let Count = 0
+let Info: Sprite = null
 background()
 wizard()
